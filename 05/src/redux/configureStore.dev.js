@@ -1,7 +1,7 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { routerReducer, routerMiddleware } from 'react-router-redux';
 import { hashHistory } from 'react-router';
-
+import { browserHistory } from 'react-router';
 import createFetchMiddleware from 'redux-composable-fetch';
 import ThunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers';
@@ -19,7 +19,7 @@ const FetchMiddleware = createFetchMiddleware({
 });
 
 const finalCreateStore = compose(
-  applyMiddleware(ThunkMiddleware, FetchMiddleware),
+  applyMiddleware(ThunkMiddleware, FetchMiddleware, routerMiddleware(browserHistory)),
   DevTools.instrument()
 )(createStore);
 
